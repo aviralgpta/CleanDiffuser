@@ -140,7 +140,7 @@ class DiscreteRectifiedFlow(DiffusionModel):
         )
         eps = torch.randn_like(x0) if eps is None else eps
 
-        t_c = t / self.diffusion_steps
+        t_c = at_least_ndim(t / self.diffusion_steps, x0.dim())
 
         xt = t_c * eps + (1 - t_c) * x0
         xt = xt * (1.0 - self.fix_mask) + x0 * self.fix_mask
